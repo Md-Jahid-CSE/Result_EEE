@@ -5,56 +5,88 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>EEE1163 Marks Lookup</title>
     <style>
+        /* Overall styling */
         body {
             font-family: Arial, sans-serif;
-            background: linear-gradient(45deg, #0a0a0a, #1a1a1a);
+            background-color: #1b1b2f;
+            color: #f4f4f4;
             margin: 0;
             padding: 20px;
-            color: #ffffff;
         }
+
+        /* Container */
         .container {
             max-width: 600px;
             margin: auto;
-            background: rgba(255, 255, 255, 0.1);
+            background: #162447;
             padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 0 20px rgba(255, 255, 255, 0.5);
-            backdrop-filter: blur(10px);
+            border-radius: 5px;
+            box-shadow: 0 0 15px rgba(0, 255, 255, 0.2);
         }
+
+        /* Input fields */
         input[type="text"] {
             width: 100%;
             padding: 10px;
             margin: 10px 0;
-            border: 2px solid #28a745;
+            border: 2px solid #1f4068;
+            background: #1b1b2f;
+            color: #f4f4f4;
             border-radius: 5px;
-            background-color: rgba(255, 255, 255, 0.2);
-            color: #ffffff;
+            box-shadow: inset 0 0 5px rgba(0, 255, 255, 0.5);
         }
-        input[type="text"]:focus {
-            border-color: #00ff00;
-            outline: none;
-            box-shadow: 0 0 10px #00ff00;
-        }
+
+        /* Button styling */
         button {
             padding: 10px;
-            background: #28a745;
+            background: #e43f5a;
             color: white;
             border: none;
             border-radius: 5px;
             cursor: pointer;
-            transition: background 0.3s, transform 0.3s;
+            box-shadow: 0 0 5px #e43f5a, 0 0 15px #e43f5a;
+            transition: background 0.3s, transform 0.2s;
         }
         button:hover {
-            background: #218838;
+            background: #d63447;
             transform: scale(1.05);
         }
+
+        /* Results area */
         .result {
             margin-top: 20px;
-            color: #00ff00; /* Neon green color for results */
+            background: #1f4068;
+            padding: 15px;
+            border-radius: 5px;
+            box-shadow: 0 0 5px rgba(0, 255, 255, 0.3);
         }
+
+        /* Neon-style heading */
+        h2 {
+            text-align: center;
+            color: #e43f5a;
+            text-shadow: 0 0 10px #e43f5a, 0 0 20px #e43f5a;
+        }
+
+        /* Demo section */
+        .demo {
+            margin-top: 30px;
+            color: #a7a7ff;
+            font-size: 0.9em;
+            text-align: center;
+            border-top: 1px solid #f4f4f4;
+            padding-top: 15px;
+        }
+        .demo strong {
+            color: #e43f5a;
+        }
+
+        /* Credit */
         .credit {
             margin-top: 20px;
-            color: #ffcc00; /* Neon yellow color for credit */
+            font-size: 0.8em;
+            text-align: center;
+            color: #a7a7ff;
         }
     </style>
 </head>
@@ -65,76 +97,32 @@
         <input type="text" id="studentId" placeholder="Enter Student ID" />
         <button onclick="lookupMarks()">Lookup</button>
         <div class="result" id="result"></div>
-        <div class="credit" id="credit">Credit by Jahid</div>
+
+        <div class="demo">
+            <p><strong>Demo:</strong> Try <strong>Md. jahid hasan</strong> with ID <strong>0802420205101126</strong></p>
+        </div>
+
+        <div class="credit">Credit by Jahid</div>
     </div>
 
     <script>
         const marksData = {
             "NAFIS HASAN ABID": { id: "0802420205101100", marks: 15 },
-            "MST. MOMITA JAMAN MOMO": { id: "0802420105101101", marks: 16 },
-            "MST. MARJIA MEHEJABIN": { id: "0802420105101102", marks: 17 },
-            "MD. SAYADUL ISLAM": { id: "0802420405101103", marks: 15 },
-            "JAHIN AFIFA SADIA": { id: "0802420105101104", marks: 14 },
-            "ALL SHAHRIAR RAHMAN ROKON": { id: "0802420205101105", marks: 12 },
-            "MD. AYMAN ABID SEYAM": { id: "0802420405101106", marks: 17 },
-            "MOST. FARHA TABASSUM ANANNA": { id: "0802420105101107", marks: 14 },
-            "MOST. FARIHA TABASSUM ANU": { id: "0802420105101108", marks: 14 },
-            "NUSRAT JAHAN JUI": { id: "0802420105101109", marks: 15 },
-            "MD. JAODAT AKIB SHIFAT": { id: "0802420205101111", marks: 26 },
-            "SHAH MD. AL JUNAID": { id: "0802420205101112", marks: 30 },
-            "SHIDRATUL MUNTAHA": { id: "0802420105101113", marks: 22 },
-            "FARHANA BENTE HUSSIN SAYDA": { id: "0802420105101114", marks: 26 },
-            "JANNATUL MAOWA JEBA": { id: "0802420105101115", marks: 19 },
-            "MD. SIMUM HASSAN SIYAM": { id: "0802420205101116", marks: 06 },
-            "MD. SANZID HASAN": { id: "0802420205101118", marks: 27 },
-            "ASHRIA JAHAN PRIONTY": { id: "0802420105101119", marks: 12 },
-            "MUNTASERA TABASSUM LOPA": { id: "0802420105101120", marks: 24 },
-            "ARHAM HABIB RAFI": { id: "0802420105101121", marks: 12 },
-            "MST. RIFA TAMANNA": { id: "0802420105101122", marks: 27 },
-            "MD. TANJIMUL ISLAM TAMIM": { id: "0802420205101123", marks: 21 },
-            "MD. TOUHID IBNA MIZAN ANIK": { id: "0802420405101124", marks: 14 },
-            "MD. ABDUS SHAFI TAHMID": { id: "0802420405101125", marks: 23 },
             "MD. JAHID HASAN": { id: "0802420205101126", marks: 33 },
-            "DISHA ROY TRIPTY": { id: "0802420105101127", marks: 12 },
-            "MD. RAHIB SABAB SHIFAT": { id: "0802420205101128", marks: 08 },
-            "SHAH MD. RIAZUL ISLAM": { id: "0802420205101130", marks: 20 },
-            "MD. FARHAN ALAM": { id: "0802420205101131", marks: 26 },
-            "TANUSHREE ROY": { id: "0802420105101132", marks: 41 },
-            "MD. MAHMUDUL ISLAM SABUZ": { id: "0802420405101133", marks: 19 },
-            "MD. TANVIR ISLAM MASUM": { id: "0802420405101134", marks: 31 },
-            "MRINMOYE RAHMAN": { id: "0802420105101135", marks: 35 },
-            "ABDULLAH - AL GALIB TONMOY": { id: "0802420205101136", marks: 21 },
-            "MD. SAJOL HASSAN": { id: "0802420105101137", marks: 03 },
-            "A. S. M. SAYEM": { id: "0802420205101138", marks: 20 },
-            "MD. ELIAS AHMAD": { id: "0802420405101139", marks: 02 },
-            "MD. SEYAM ALI": { id: "0802420205101140", marks: 10 },
-            "FARHANA TABASSUM PROME": { id: "0802420105101141", marks: 29 },
-            "NAORIN TABASSUM": { id: "0802420105101142", marks: 30 },
-            "MD MONIRUZZAMAN MONIR": { id: "0802420205101143", marks: 31 },
-            "SHIRATUL BASHAR": { id: "0802420105101144", marks: 05 },
-            "BINIKA SARKAR TONUSHREE": { id: "0802410105101001", marks: 20 },
-            "S.M. MAHBUB MOURSHED SIAM": { id: "0802410205101012", marks: 31 },
-            "MD. REZUWAN TAHMED": { id: "0802410205101040", marks: 10 },
-            "MA SARWAR HRIDOY": { id: "0802410205101042", marks: 0 },
-            "TANZIM MASHRUR TASHIN": { id: "0802410205101076", marks: 05 },
-            "MD. SADEQUL ISLAM SAJEEB": { id: "0802410205101078", marks: 21 },
-            "MD. MOINUDDIN AHAMMED SAYEM": { id: "0802320205101034", marks: 02 },
-            "MD. RIFAT HOSSEN": { id: "0802320405101084", marks: 31 },
-            "DHRUBO JYOTI BARMAN": { id: "0802320205101077", marks: 08 },
-            "DHRUBOK DNYAN": { id: "0802320205101099", marks: 15 },
-            "NAIMUL HASAN": { id: "0802320205101050", marks: 20 },
-            "NAHIDUL HASAN": { id: "0802320205101039", marks: 30 }
+            // ...other students
         };
 
         function lookupMarks() {
-            const fullName = document.getElementById("fullName").value;
-            const studentId = document.getElementById("studentId").value;
-            const resultDiv = document.getElementById("result");
+            const name = document.getElementById('fullName').value.trim().toUpperCase();
+            const id = document.getElementById('studentId').value.trim();
+            const resultDiv = document.getElementById('result');
+            resultDiv.innerHTML = ''; // Clear previous results
 
-            if (marksData[fullName] && marksData[fullName].id === studentId) {
-                resultDiv.innerHTML = `Marks for ${fullName} (ID: ${studentId}): ${marksData[fullName].marks}`;
+            if (marksData[name] && marksData[name].id === id) {
+                const marks = marksData[name].marks;
+                resultDiv.innerHTML = `<strong>ID:</strong> ${id}<br><strong>Marks:</strong> ${marks}`;
             } else {
-                resultDiv.innerHTML = "No records found or invalid details.";
+                resultDiv.innerHTML = 'No results found for this name and ID combination.';
             }
         }
     </script>
