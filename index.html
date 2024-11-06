@@ -243,24 +243,24 @@ const marksData = {
     "DHRUBO JYOTI BARMAN": { id: "0802320205101077", ct1: "A", ct2: "A", mid: 8, attendance: 0 }
 };
 
-        function lookupMarks() {
-            const fullName = document.getElementById('fullName').value.trim();
-            const studentId = document.getElementById('studentId').value.trim();
+function lookupMarks() {
+    const fullName = document.getElementById('fullName').value.trim().toUpperCase();
+    const studentId = document.getElementById('studentId').value.trim();
 
-            if (marksData[fullName] && marksData[fullName].id === studentId) {
-                const student = marksData[fullName];
-                document.getElementById('result').innerHTML = `
-                    <p><strong>Full Name:</strong> ${fullName}</p>
-                    <p><strong>Student ID:</strong> ${student.id}</p>
-                    <p><strong>CT1 Marks (Out of 20):</strong> ${student.ct1}</p>
-                    <p><strong>CT2 Marks (Out of 20):</strong> ${student.ct2}</p>
-                    <p><strong>Midterm Marks (Out of 45):</strong> ${student.mid}</p>
-                    <p><strong>Attendance (Out of 17):</strong> ${student.attendance}</p>
-                `;
-            } else {
-                document.getElementById('result').innerHTML = "<p style='color:red;'>No data found for the given name or ID.</p>";
-            }
-        }
+    if (marksData[fullName] && marksData[fullName].id.toUpperCase() === studentId.toUpperCase()) {
+        const student = marksData[fullName];
+        document.getElementById('result').innerHTML = `
+            <p><strong>Full Name:</strong> ${fullName}</p>
+            <p><strong>Student ID:</strong> ${student.id}</p>
+            <p><strong>CT1 Marks (Out of 20):</strong> ${student.ct1}</p>
+            <p><strong>CT2 Marks (Out of 20):</strong> ${student.ct2}</p>
+            <p><strong>Midterm Marks (Out of 45):</strong> ${student.mid}</p>
+            <p><strong>Attendance (Out of 17):</strong> ${student.attendance}</p>
+        `;
+    } else {
+        document.getElementById('result').innerHTML = "<p style='color:red;'>No data found for the given name or ID.</p>";
+    }
+}
     </script>
 </body>
 </html>
